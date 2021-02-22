@@ -6,11 +6,9 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 
-using BlazorApp.Shared;
-
 namespace BlazorApp.Api
 {
-    public static class WeatherForecastFunction
+    public static class WeatherForecast
     {
         private static string GetSummary(int temp)
         {
@@ -32,7 +30,7 @@ namespace BlazorApp.Api
             return summary;
         }
 
-        [FunctionName("WeatherForecast")]
+        [FunctionName(nameof(WeatherForecast))]
         public static IActionResult Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req,
             ILogger log)
@@ -40,7 +38,7 @@ namespace BlazorApp.Api
             var randomNumber = new Random();
             var temp = 0;
 
-            var result = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+            var result = Enumerable.Range(1, 5).Select(index => new BlazorApp.Shared.WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
                 TemperatureC = temp = randomNumber.Next(-20, 55),
